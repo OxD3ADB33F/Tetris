@@ -22,7 +22,8 @@ int pieces[7][4][4] =
   {{0, 1, 1, 0}, {1, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}
 };
 
-void init()
+void
+init ()
 {
   initscr();
   noecho();
@@ -34,12 +35,14 @@ void init()
   gen_np();
 }
 
-void fin()
+void
+fin ()
 {
   endwin();
 }
 
-void draw()
+void
+draw ()
 {
   clear();
   int offset_x = (COLS - WIDTH * 2) / 2;
@@ -75,7 +78,8 @@ void draw()
   refresh();
 }
 
-void gen_np()
+void
+gen_np ()
 {
   for (int y = 0; y < 4; y++)
     {
@@ -90,7 +94,8 @@ void gen_np()
   posY = 0;
 }
 
-void gen_nnp()
+void
+gen_nnp ()
 {
   int type = rand() % 7;
   for (int y = 0; y < 4; y++)
@@ -102,7 +107,8 @@ void gen_nnp()
     }
 }
 
-void show_np()
+void
+show_np ()
 {
   int offset_x = (COLS - WIDTH * 2) / 2 + WIDTH * 2 + 4;
   int offset_y = (LINES - HEIGHT) / 2;
@@ -124,7 +130,8 @@ void show_np()
     }
 }
 
-int check_col(int dx, int dy)
+int
+check_col (int dx, int dy)
 {
   for (int y = 0; y < 4; y++)
     {
@@ -145,7 +152,8 @@ int check_col(int dx, int dy)
   return 0;
 }
 
-void move_p(int dx, int dy)
+void
+move_p (int dx, int dy)
 {
   if (!check_col(dx, dy))
     {
@@ -154,7 +162,8 @@ void move_p(int dx, int dy)
     }
 }
 
-void fix_p()
+void
+fix_p ()
 {
   for (int y = 0; y < 4; y++)
     {
@@ -168,7 +177,8 @@ void fix_p()
     }
 }
 
-void rem_lines()
+void
+rem_lines ()
 {
   for (int y = 0; y < HEIGHT; y++)
     {
@@ -198,7 +208,8 @@ void rem_lines()
     }
 }
 
-void rot_p()
+void
+rot_p ()
 {
   int newPiece[4][4] = {0};
   for (int y = 0; y < 4; y++)
@@ -227,7 +238,8 @@ void rot_p()
     }
 }
 
-void g_over()
+void
+g_over ()
 {
   mvprintw(LINES / 2, (COLS - 9) / 2, "Game Over!");
   refresh();
@@ -235,7 +247,8 @@ void g_over()
   gameRunning = 0;
 }
 
-void p_input()
+void
+p_input ()
 {
   int key = getch();
   switch (key)
@@ -258,26 +271,26 @@ void p_input()
 }
 
 int
-main()
+main ()
 {
   init();
   while (gameRunning)
     {
       p_input();
       if (check_col(0, 1))
-	      {
-	        fix_p();
-	        rem_lines();
-	        gen_np();
-	        if (check_col(0, 0))
-	          {
-	            g_over();
-	          }
-	      }
+	{
+	  fix_p();
+	  rem_lines();
+	  gen_np();
+	  if (check_col(0, 0))
+	    {
+	      g_over();
+	    }
+	}
       else
-	      {
-	        move_p(0, 1);
-	      }
+        {
+          move_p(0, 1);
+	}
       draw();
       usleep(100000);
     }
